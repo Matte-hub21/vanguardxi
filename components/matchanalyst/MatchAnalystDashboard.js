@@ -17,6 +17,8 @@ import { BarChart3, Video, Settings, Download } from 'lucide-react'
 export function MatchAnalystDashboard({ matchId = 'm1' }) {
   const analysis = useMatchAnalysis(matchId)
   const [selectedMatch, setSelectedMatch] = useState(MATCHES.find(m => m.id === matchId))
+  const [isSaving, setIsSaving] = useState(false)
+  const [saveStatus, setSaveStatus] = useState(null)
 
   // Calcola statistiche
   const allPlayerStats = PLAYERS.map(p => analysis.getPlayerStats(p.id))
@@ -35,6 +37,18 @@ export function MatchAnalystDashboard({ matchId = 'm1' }) {
     document.body.appendChild(element)
     element.click()
     document.body.removeChild(element)
+  }
+
+  const handleSaveToDatabase = async () => {
+    setIsSaving(true)
+    setSaveStatus('Salvando...')
+    const result = await analysis.saveToDatabase(
+      selectedMatch?.team || 'vanguard-xi',
+      selectedMatch?.opponent || 'Unknown'
+    )
+    setSaveStatus(result.message)
+    setIsSaving(false)
+    setTimeout(() => setSaveStatus(null), 3000)
   }
 
   return (
@@ -126,20 +140,37 @@ export function MatchAnalystDashboard({ matchId = 'm1' }) {
 
         {/* Statistics Tab */}
         <TabsContent value="stats" className="mt-6 space-y-6">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h2 className="text-xl font-bold">Analisi della Partita</h2>
-              <p className="text-sm text-muted-foreground">{analysis.events.length} eventi tracciati</p>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-xl font-bold">Analisi della Partita</h2>
+                <p className="text-sm text-muted-foreground">{analysis.events.length} eventi tracciati</p>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  onClick={handleSaveToDatabase}
+                  disabled={analysis.events.length === 0 || isSaving}
+                >
+                  {isSaving ? '💾 Salvando...' : '💾 Salva su DB'}
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={handleExport}
+                  disabled={analysis.events.length === 0}
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  Esporta JSON
+                </Button>
+              </div>
             </div>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={handleExport}
-              disabled={analysis.events.length === 0}
-            >
-              <Download className="h-4 w-4 mr-2" />
-              Esporta JSON
-            </Button>
+
+            {saveStatus && (
+              <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-500 text-sm">
+                ✅ {saveStatus}
+              </div>
+            )}
           </div>
 
           <MatchAnalytics
