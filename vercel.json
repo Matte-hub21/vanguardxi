@@ -6,7 +6,7 @@
   "framework": "nextjs",
   "env": {
     "NEXT_PUBLIC_USE_MOCK_AUTH": "true",
-    "NEXT_PUBLIC_SUPABASE_URL": "",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": ""
+    "NEXT_PUBLIC_SUPABASE_URL": "https://yvdfvlzaodmfavtznbke.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2ZGZ2bHphb2RtZmF2dHpuYmtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2Nzc4ODQsImV4cCI6MjA5NDI1Mzg4NH0.gYLVKbOZbV1vP2vsV7m7TsdPx8o7AxecPbbsVzSS6Wo"
   }
 }
