@@ -22,7 +22,7 @@ export default function AnalystPage() {
   const upcomingMatches = MATCHES.filter(m => m.status === 'completed' || m.status === 'upcoming')
 
   return (
-    <RoleGuard requiredRole="captain" fallback={<div className="text-center py-12">Solo capitani possono accedere al Match Analyst</div>}>
+    <RoleGuard requiredRole="player" fallback={<div className="text-center py-12">Accedi per usare Match Analyst</div>}>
       <div className="space-y-6">
         {/* Match Selector */}
         <div className="flex items-end gap-3">
