@@ -124,6 +124,18 @@ export default function JoinRequestsPage() {
     )
   }
 
+  if (!isCaptain()) {
+    return (
+      <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-black to-slate-900 opacity-90" />
+        <div className="relative z-10 p-8 text-center">
+          <AlertCircle className="h-12 w-12 mx-auto mb-4 text-yellow-500" />
+          <p className="text-yellow-400 text-lg font-semibold">Solo i capitani possono gestire le richieste</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Background gradient effect */}
