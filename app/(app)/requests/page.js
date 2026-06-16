@@ -24,10 +24,11 @@ export default function JoinRequestsPage() {
   useEffect(() => {
     if (!isCaptain()) {
       setError('Solo i capitani possono approvare le richieste')
+      setLoading(false)
       return
     }
     fetchRequests()
-  }, [isCaptain, activeTab])
+  }, [activeTab])
 
   const fetchRequests = async () => {
     setLoading(true)
