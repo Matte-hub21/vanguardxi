@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { LayoutDashboard, Swords, Calendar, Users, BarChart3, Image as ImageIcon, Settings, Trophy, Zap } from 'lucide-react'
+import { LayoutDashboard, Swords, Calendar, Users, BarChart3, Image as ImageIcon, Settings, Trophy, Zap, UserCheck } from 'lucide-react'
 import { Logo } from '@/components/common/Logo'
 import { cn } from '@/lib/utils'
 
@@ -13,6 +13,7 @@ const NAV = [
   { href: '/calendar', label: 'Calendar', icon: Calendar },
   { href: '/competitions', label: 'Competizioni', icon: Trophy },
   { href: '/players', label: 'Players', icon: Users },
+  { href: '/requests', label: 'Richieste', icon: UserCheck },
   { href: '/statistics', label: 'Statistics', icon: BarChart3 },
   { href: '/media', label: 'Media', icon: ImageIcon },
   { href: '/settings', label: 'Settings', icon: Settings },
