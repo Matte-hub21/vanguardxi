@@ -6,7 +6,7 @@
   "framework": "nextjs",
   "env": {
     "NEXT_PUBLIC_USE_MOCK_AUTH": "true",
-    "NEXT_PUBLIC_SUPABASE_URL": "https://yvdfvlzaodmfavtznbke.supabase.co",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2ZGZ2bHphb2RtZmF2dHpuYmtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2Nzc4ODQsImV4cCI6MjA5NDI1Mzg4NH0.gYLVKbOZbV1vP2vsV7m7TsdPx8o7AxecPbbsVzSS6Wo"
+    "NEXT_PUBLIC_SUPABASE_URL": "https://mhtwaqzpwuvujohwcrxg.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1odHdhcXpwd3V2dWpvaHdjcnhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1OTM3MTAsImV4cCI6MjA5NzE2OTcxMH0.lzr1Uf38O0e70pUWASl9N1FJZ3KOcwc06J5IqagD0SY"
   }
 }
