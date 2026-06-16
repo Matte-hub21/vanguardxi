@@ -5,7 +5,7 @@ export const metadata = {
   title: 'Vanguard XI — Pro Clubs Esports HQ',
   description: 'EA Sports FC 26 Pro Clubs team management for Vanguard XI',
   icons: {
-    icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect fill="%23000" width="192" height="192"/><text x="96" y="140" font-size="120" font-weight="bold" fill="%23D4AF37" text-anchor="middle" font-family="Arial">⚔</text></svg>',
+    icon: '/favicon.svg',
   },
 }
 
