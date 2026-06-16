@@ -32,18 +32,31 @@ export default function JoinRequestsPage() {
 
   const fetchRequests = async () => {
     setLoading(true)
+    setError(null)
     try {
       const response = await fetch(`/api/join-requests?status=${activeTab}`)
-      const data = await response.json()
-
+      
       if (!response.ok) {
-        throw new Error(data.error)
+        if (response.status === 404) {
+          setError('API non trovata. Verifica di essere deployato su Vercel.')
+          setRequests([])
+          return
+        }
+        throw new Error(`HTTP ${response.status}`)
       }
 
-      setRequests(data.requests || [])
-      setError(null)
+      const data = await response.json()
+      
+      if (!Array.isArray(data.requests)) {
+        console.warn('Expected requests to be array, got:', typeof data.requests)
+        setRequests([])
+        return
+      }
+
+      setRequests(data.requests)
     } catch (err) {
-      setError(err.message)
+      console.error('Fetch error:', err)
+      setError(err.message || 'Errore nel caricamento delle richieste')
       setRequests([])
     } finally {
       setLoading(false)
