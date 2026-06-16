@@ -247,12 +247,8 @@ export default function JoinRequestsPage() {
       <AlertDialog open={!!selectedRequest} onOpenChange={(open) => !open && setSelectedRequest(null)}>
         <AlertDialogContent className="bg-black/90 border-[#D4AF37]/30 backdrop-blur-xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white text-2xl flex items-center gap-2">
-              {actionType === 'approve' ? (
-                <><CheckCircle2 className="h-6 w-6 text-green-400" /> Approvare Giocatore?</>
-              ) : (
-                <><XCircle className="h-6 w-6 text-red-400" /> Rifiutare Giocatore?</>
-              )}
+            <AlertDialogTitle className="text-white text-2xl">
+              {actionType === 'approve' ? '✅ Approvare Giocatore?' : '❌ Rifiutare Giocatore?'}
             </AlertDialogTitle>
             <AlertDialogDescription className="text-slate-300">
               <p className="font-semibold text-[#D4AF37] mb-1">{selectedRequest?.full_name}</p>
