@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { AlertCircle, CheckCircle2, Loader } from 'lucide-react'
+import { AlertCircle, CheckCircle2, Loader, Shield } from 'lucide-react'
 
 const POSITIONS = [
   'Goalkeeper',
@@ -80,7 +80,6 @@ export default function JoinPage() {
         notes: ''
       })
 
-      // Reset success dopo 5 secondi
       setTimeout(() => setSuccess(false), 5000)
     } catch (err) {
       setError(err.message)
@@ -90,190 +89,240 @@ export default function JoinPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
-      <Card className="w-full max-w-lg bg-slate-800/50 border-slate-700">
-        <CardHeader className="text-center space-y-2">
-          <CardTitle className="text-3xl font-bold text-[#D4AF37]">
-            🏆 Unisciti a Vanguard XI
-          </CardTitle>
-          <CardDescription className="text-slate-300">
-            Compila il modulo per entrare nella squadra. Il capitano esaminerà la tua richiesta.
-          </CardDescription>
-        </CardHeader>
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      {/* Background gradient effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-black to-slate-900 opacity-90" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-3xl opacity-20" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl opacity-20" />
 
-        <CardContent>
-          {success && (
-            <div className="mb-6 p-4 bg-green-500/10 border border-green-500/50 rounded-lg flex gap-3 items-start">
-              <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0 mt-0.5" />
+      <div className="relative z-10 min-h-screen flex flex-col">
+        {/* Header */}
+        <div className="border-b border-[#D4AF37]/20 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto px-6 py-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-[#D4AF37]/20 border border-[#D4AF37] rounded-lg flex items-center justify-center">
+                <span className="text-[#D4AF37] font-bold">V</span>
+              </div>
               <div>
-                <p className="font-semibold text-green-400">Richiesta inviata!</p>
-                <p className="text-sm text-green-300">Il capitano esaminerà la tua candidatura.</p>
+                <p className="text-white font-bold text-lg">VANGUARD XI</p>
+                <p className="text-xs text-[#D4AF37] tracking-wider">PRO CLUBS HQ</p>
               </div>
             </div>
-          )}
+          </div>
+        </div>
 
-          {error && (
-            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg flex gap-3 items-start">
-              <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="font-semibold text-red-400">Errore</p>
-                <p className="text-sm text-red-300">{error}</p>
-              </div>
-            </div>
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Full Name */}
-            <div className="space-y-2">
-              <Label htmlFor="full_name" className="text-slate-200">
-                Nome Completo *
-              </Label>
-              <Input
-                id="full_name"
-                name="full_name"
-                value={formData.full_name}
-                onChange={handleChange}
-                placeholder="Es: Marco Rossi"
-                required
-                className="bg-slate-700/50 border-slate-600 text-white"
-              />
+        {/* Main Content */}
+        <div className="flex-1 flex items-center justify-center px-4 py-12">
+          <div className="w-full max-w-lg">
+            {/* Hero Section */}
+            <div className="text-center mb-10">
+              <h1 className="text-5xl md:text-6xl font-black mb-4">
+                <span className="text-white">JOIN</span>
+                <br />
+                <span className="bg-gradient-to-r from-[#D4AF37] to-[#FFE066] bg-clip-text text-transparent">
+                  THE LEGEND
+                </span>
+              </h1>
+              <p className="text-slate-400 text-lg mb-8">
+                Unisciti al nostro roster ufficiale.
+                <br />
+                <span className="text-[#D4AF37] font-semibold">Forged in Gold. Built to Dominate.</span>
+              </p>
             </div>
 
-            {/* Email */}
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-slate-200">
-                Email *
-              </Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="tuo.email@example.com"
-                required
-                className="bg-slate-700/50 border-slate-600 text-white"
-              />
+            {/* Form Card */}
+            <Card className="bg-black/40 border-[#D4AF37]/30 backdrop-blur-xl shadow-2xl">
+              <CardHeader className="border-b border-[#D4AF37]/20 pb-6">
+                <CardTitle className="text-white text-2xl flex items-center gap-2">
+                  <Shield className="h-6 w-6 text-[#D4AF37]" />
+                  CANDIDATURA
+                </CardTitle>
+                <CardDescription className="text-slate-400">
+                  Compila il modulo per entrare nella squadra ufficiale
+                </CardDescription>
+              </CardHeader>
+
+              <CardContent className="pt-6">
+                {success && (
+                  <div className="mb-6 p-4 bg-green-500/10 border border-green-500/50 rounded-lg flex gap-3 items-start">
+                    <CheckCircle2 className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-bold text-green-400">✅ Richiesta Inviata!</p>
+                      <p className="text-sm text-green-300">Il capitano esaminerà la tua candidatura.</p>
+                    </div>
+                  </div>
+                )}
+
+                {error && (
+                  <div className="mb-6 p-4 bg-red-500/10 border border-red-500/50 rounded-lg flex gap-3 items-start">
+                    <AlertCircle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="font-bold text-red-400">Errore</p>
+                      <p className="text-sm text-red-300">{error}</p>
+                    </div>
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  {/* Row 1: Full Name & Email */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="full_name" className="text-[#D4AF37] font-semibold uppercase text-xs">
+                        Nome Completo *
+                      </Label>
+                      <Input
+                        id="full_name"
+                        name="full_name"
+                        value={formData.full_name}
+                        onChange={handleChange}
+                        placeholder="Marco Rossi"
+                        required
+                        className="bg-slate-900/50 border-[#D4AF37]/30 text-white placeholder-slate-500 focus:border-[#D4AF37] focus:ring-[#D4AF37]/20"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="text-[#D4AF37] font-semibold uppercase text-xs">
+                        Email *
+                      </Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="tuo@email.com"
+                        required
+                        className="bg-slate-900/50 border-[#D4AF37]/30 text-white placeholder-slate-500 focus:border-[#D4AF37] focus:ring-[#D4AF37]/20"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Row 2: Platform & Position */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-[#D4AF37] font-semibold uppercase text-xs">Piattaforma *</Label>
+                      <Select value={formData.platform} onValueChange={(value) => handleSelectChange('platform', value)}>
+                        <SelectTrigger className="bg-slate-900/50 border-[#D4AF37]/30 text-white focus:border-[#D4AF37]">
+                          <SelectValue placeholder="Scegli..." />
+                        </SelectTrigger>
+                        <SelectContent className="bg-slate-900 border-[#D4AF37]/30">
+                          <SelectItem value="xbox">🎮 Xbox</SelectItem>
+                          <SelectItem value="playstation">🎮 PlayStation</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-[#D4AF37] font-semibold uppercase text-xs">Ruolo *</Label>
+                      <Select 
+                        value={formData.preferred_position} 
+                        onValueChange={(value) => handleSelectChange('preferred_position', value)}
+                      >
+                        <SelectTrigger className="bg-slate-900/50 border-[#D4AF37]/30 text-white focus:border-[#D4AF37]">
+                          <SelectValue placeholder="Scegli..." />
+                        </SelectTrigger>
+                        <SelectContent className="bg-slate-900 border-[#D4AF37]/30">
+                          {POSITIONS.map(pos => (
+                            <SelectItem key={pos} value={pos}>{pos}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  {/* Row 3: Site Username & EA Gamertag */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="site_username" className="text-[#D4AF37] font-semibold uppercase text-xs">
+                        Username Sito *
+                      </Label>
+                      <Input
+                        id="site_username"
+                        name="site_username"
+                        value={formData.site_username}
+                        onChange={handleChange}
+                        placeholder="marcorossi99"
+                        required
+                        className="bg-slate-900/50 border-[#D4AF37]/30 text-white placeholder-slate-500 focus:border-[#D4AF37]"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="ea_gamertag" className="text-[#D4AF37] font-semibold uppercase text-xs">
+                        EA Gamertag *
+                      </Label>
+                      <Input
+                        id="ea_gamertag"
+                        name="ea_gamertag"
+                        value={formData.ea_gamertag}
+                        onChange={handleChange}
+                        placeholder="MarcoR99"
+                        required
+                        className="bg-slate-900/50 border-[#D4AF37]/30 text-white placeholder-slate-500 focus:border-[#D4AF37]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Row 4: Console Gamertag */}
+                  <div className="space-y-2">
+                    <Label htmlFor="console_gamertag" className="text-[#D4AF37] font-semibold uppercase text-xs">
+                      Gamertag Console *
+                    </Label>
+                    <Input
+                      id="console_gamertag"
+                      name="console_gamertag"
+                      value={formData.console_gamertag}
+                      onChange={handleChange}
+                      placeholder="MarcoRossi99"
+                      required
+                      className="bg-slate-900/50 border-[#D4AF37]/30 text-white placeholder-slate-500 focus:border-[#D4AF37]"
+                    />
+                  </div>
+
+                  {/* Row 5: Notes */}
+                  <div className="space-y-2">
+                    <Label htmlFor="notes" className="text-[#D4AF37] font-semibold uppercase text-xs">
+                      Note (Opzionale)
+                    </Label>
+                    <Textarea
+                      id="notes"
+                      name="notes"
+                      value={formData.notes}
+                      onChange={handleChange}
+                      placeholder="Es: Anni di esperienza, titoli giocati, ecc..."
+                      className="bg-slate-900/50 border-[#D4AF37]/30 text-white placeholder-slate-500 focus:border-[#D4AF37]"
+                      rows={3}
+                    />
+                  </div>
+
+                  {/* Submit Button */}
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full bg-gradient-to-r from-[#D4AF37] to-[#FFE066] hover:from-[#C99A2E] hover:to-[#E6CC44] text-black font-bold text-lg py-6 rounded-lg transition-all"
+                  >
+                    {loading ? (
+                      <>
+                        <Loader className="h-5 w-5 mr-2 animate-spin" />
+                        PROCESSING...
+                      </>
+                    ) : (
+                      '→ INVIA CANDIDATURA'
+                    )}
+                  </Button>
+
+                  <p className="text-xs text-slate-500 text-center">
+                    * Campi obbligatori | Protetto da Supabase Auth
+                  </p>
+                </form>
+              </CardContent>
+            </Card>
+
+            {/* Footer */}
+            <div className="mt-8 text-center text-slate-500 text-xs">
+              <p>© 2026 Vanguard XI Esports • All rights reserved</p>
             </div>
-
-            {/* Platform */}
-            <div className="space-y-2">
-              <Label className="text-slate-200">Piattaforma *</Label>
-              <Select value={formData.platform} onValueChange={(value) => handleSelectChange('platform', value)}>
-                <SelectTrigger className="bg-slate-700/50 border-slate-600 text-white">
-                  <SelectValue placeholder="Seleziona piattaforma" />
-                </SelectTrigger>
-                <SelectContent className="bg-slate-700 border-slate-600">
-                  <SelectItem value="xbox">🎮 Xbox</SelectItem>
-                  <SelectItem value="playstation">🎮 PlayStation</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Site Username */}
-            <div className="space-y-2">
-              <Label htmlFor="site_username" className="text-slate-200">
-                Username Sito *
-              </Label>
-              <Input
-                id="site_username"
-                name="site_username"
-                value={formData.site_username}
-                onChange={handleChange}
-                placeholder="Es: marcorossi99"
-                required
-                className="bg-slate-700/50 border-slate-600 text-white"
-              />
-            </div>
-
-            {/* EA Gamertag */}
-            <div className="space-y-2">
-              <Label htmlFor="ea_gamertag" className="text-slate-200">
-                Gamertag EA Sports *
-              </Label>
-              <Input
-                id="ea_gamertag"
-                name="ea_gamertag"
-                value={formData.ea_gamertag}
-                onChange={handleChange}
-                placeholder="Es: MarcoR99"
-                required
-                className="bg-slate-700/50 border-slate-600 text-white"
-              />
-            </div>
-
-            {/* Console Gamertag */}
-            <div className="space-y-2">
-              <Label htmlFor="console_gamertag" className="text-slate-200">
-                Gamertag Console *
-              </Label>
-              <Input
-                id="console_gamertag"
-                name="console_gamertag"
-                value={formData.console_gamertag}
-                onChange={handleChange}
-                placeholder="Es: MarcoRossi99"
-                required
-                className="bg-slate-700/50 border-slate-600 text-white"
-              />
-            </div>
-
-            {/* Preferred Position */}
-            <div className="space-y-2">
-              <Label className="text-slate-200">Ruolo Preferito *</Label>
-              <Select 
-                value={formData.preferred_position} 
-                onValueChange={(value) => handleSelectChange('preferred_position', value)}
-              >
-                <SelectTrigger className="bg-slate-700/50 border-slate-600 text-white">
-                  <SelectValue placeholder="Seleziona ruolo" />
-                </SelectTrigger>
-                <SelectContent className="bg-slate-700 border-slate-600">
-                  {POSITIONS.map(pos => (
-                    <SelectItem key={pos} value={pos}>{pos}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Notes */}
-            <div className="space-y-2">
-              <Label htmlFor="notes" className="text-slate-200">
-                Note (Opzionale)
-              </Label>
-              <Textarea
-                id="notes"
-                name="notes"
-                value={formData.notes}
-                onChange={handleChange}
-                placeholder="Es: Ultimi titoli giocati, esperienza, ecc..."
-                className="bg-slate-700/50 border-slate-600 text-white"
-                rows={3}
-              />
-            </div>
-
-            {/* Submit Button */}
-            <Button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-[#D4AF37] hover:bg-[#C99A2E] text-slate-900 font-bold"
-            >
-              {loading ? (
-                <>
-                  <Loader className="h-4 w-4 mr-2 animate-spin" />
-                  Invio in corso...
-                </>
-              ) : (
-                '✉️ Invia Richiesta'
-              )}
-            </Button>
-
-            <p className="text-xs text-slate-400 text-center">
-              I campi con * sono obbligatori
-            </p>
-          </form>
-        </CardContent>
-      </Card>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
