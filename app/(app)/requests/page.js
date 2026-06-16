@@ -8,7 +8,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { useRole } from '@/lib/hooks/useRole'
-import { Check, X, Loader, AlertCircle } from 'lucide-react'
+import { Check, X, Loader, AlertCircle, Users, Clock, CheckCircle2, XCircle } from 'lucide-react'
 
 export default function JoinRequestsPage() {
   const { isCaptain } = useRole()
@@ -100,53 +100,82 @@ export default function JoinRequestsPage() {
 
   if (error && !isCaptain()) {
     return (
-      <div className="p-8 text-center">
-        <AlertCircle className="h-8 w-8 mx-auto mb-2 text-red-500" />
-        <p className="text-red-500">{error}</p>
+      <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-black to-slate-900 opacity-90" />
+        <div className="relative z-10 p-8 text-center">
+          <AlertCircle className="h-12 w-12 mx-auto mb-4 text-red-500" />
+          <p className="text-red-400 text-lg font-semibold">{error}</p>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="space-y-2">
-        <h1 className="text-3xl font-bold flex items-center gap-3">
-          👥 Richieste di Accesso
-        </h1>
-        <p className="text-muted-foreground">
-          Approva o rifiuta le richieste di nuovi giocatori
-        </p>
-      </div>
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      {/* Background gradient effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-black to-slate-900 opacity-90" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-[#D4AF37]/5 rounded-full blur-3xl opacity-20" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl opacity-20" />
 
-      {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="pending">
-            ⏳ In Sospeso
-            {requests.filter(r => r.status === 'pending').length > 0 && (
-              <Badge className="ml-2 bg-yellow-500/20 text-yellow-400">
-                {requests.filter(r => r.status === 'pending').length}
-              </Badge>
-            )}
-          </TabsTrigger>
-          <TabsTrigger value="approved">
-            ✅ Approvate
-          </TabsTrigger>
-          <TabsTrigger value="rejected">
-            ❌ Rifiutate
-          </TabsTrigger>
-        </TabsList>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-8">
+        {/* Header */}
+        <div className="mb-10">
+          <div className="flex items-center gap-3 mb-4">
+            <Users className="h-8 w-8 text-[#D4AF37]" />
+            <div>
+              <h1 className="text-5xl font-black text-white">RICHIESTE</h1>
+              <p className="text-[#D4AF37] tracking-wider text-sm font-semibold">Gestisci i candidati</p>
+            </div>
+          </div>
+          <p className="text-slate-400 text-lg">
+            Approva o rifiuta le richieste di nuovi giocatori per entrare nella squadra
+          </p>
+        </div>
+
+        {/* Tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-3 bg-black/40 border border-[#D4AF37]/30 rounded-lg p-1">
+            <TabsTrigger 
+              value="pending"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#D4AF37] data-[state=active]:to-[#FFE066] data-[state=active]:text-black text-[#D4AF37] transition-all flex items-center gap-2"
+            >
+              <Clock className="h-4 w-4" />
+              In Sospeso
+              {requests.filter(r => r.status === 'pending').length > 0 && (
+                <Badge className="ml-2 bg-yellow-500/20 text-yellow-400 border-yellow-500/50">
+                  {requests.filter(r => r.status === 'pending').length}
+                </Badge>
+              )}
+            </TabsTrigger>
+            <TabsTrigger 
+              value="approved"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#D4AF37] data-[state=active]:to-[#FFE066] data-[state=active]:text-black text-[#D4AF37] transition-all flex items-center gap-2"
+            >
+              <CheckCircle2 className="h-4 w-4" />
+              Approvate
+            </TabsTrigger>
+            <TabsTrigger 
+              value="rejected"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#D4AF37] data-[state=active]:to-[#FFE066] data-[state=active]:text-black text-[#D4AF37] transition-all flex items-center gap-2"
+            >
+              <XCircle className="h-4 w-4" />
+              Rifiutate
+            </TabsTrigger>
+          </TabsList>
 
         {/* Pending Tab */}
-        <TabsContent value="pending" className="mt-6">
+        <TabsContent value="pending" className="mt-8">
           {loading ? (
-            <div className="text-center py-12">
-              <Loader className="h-8 w-8 animate-spin mx-auto text-[#D4AF37]" />
+            <div className="text-center py-20">
+              <Loader className="h-10 w-10 animate-spin mx-auto text-[#D4AF37] mb-4" />
+              <p className="text-slate-400">Caricamento richieste...</p>
             </div>
           ) : requests.length === 0 ? (
-            <Card className="bg-slate-800/50 border-slate-700 text-center py-12">
-              <p className="text-slate-400">Nessuna richiesta in sospeso 🎉</p>
+            <Card className="bg-black/40 border-[#D4AF37]/20 text-center py-16">
+              <CardContent>
+                <Clock className="h-12 w-12 mx-auto mb-4 text-[#D4AF37]/50" />
+                <p className="text-slate-400 text-lg">Nessuna richiesta in sospeso 🎉</p>
+              </CardContent>
             </Card>
           ) : (
             <div className="grid gap-4">
@@ -163,14 +192,18 @@ export default function JoinRequestsPage() {
         </TabsContent>
 
         {/* Approved Tab */}
-        <TabsContent value="approved" className="mt-6">
+        <TabsContent value="approved" className="mt-8">
           {loading ? (
-            <div className="text-center py-12">
-              <Loader className="h-8 w-8 animate-spin mx-auto text-[#D4AF37]" />
+            <div className="text-center py-20">
+              <Loader className="h-10 w-10 animate-spin mx-auto text-[#D4AF37] mb-4" />
+              <p className="text-slate-400">Caricamento richieste...</p>
             </div>
           ) : requests.length === 0 ? (
-            <Card className="bg-slate-800/50 border-slate-700 text-center py-12">
-              <p className="text-slate-400">Nessuna richiesta approvata</p>
+            <Card className="bg-black/40 border-[#D4AF37]/20 text-center py-16">
+              <CardContent>
+                <CheckCircle2 className="h-12 w-12 mx-auto mb-4 text-[#D4AF37]/50" />
+                <p className="text-slate-400 text-lg">Nessuna richiesta approvata</p>
+              </CardContent>
             </Card>
           ) : (
             <div className="grid gap-4">
@@ -182,14 +215,18 @@ export default function JoinRequestsPage() {
         </TabsContent>
 
         {/* Rejected Tab */}
-        <TabsContent value="rejected" className="mt-6">
+        <TabsContent value="rejected" className="mt-8">
           {loading ? (
-            <div className="text-center py-12">
-              <Loader className="h-8 w-8 animate-spin mx-auto text-[#D4AF37]" />
+            <div className="text-center py-20">
+              <Loader className="h-10 w-10 animate-spin mx-auto text-[#D4AF37] mb-4" />
+              <p className="text-slate-400">Caricamento richieste...</p>
             </div>
           ) : requests.length === 0 ? (
-            <Card className="bg-slate-800/50 border-slate-700 text-center py-12">
-              <p className="text-slate-400">Nessuna richiesta rifiutata</p>
+            <Card className="bg-black/40 border-[#D4AF37]/20 text-center py-16">
+              <CardContent>
+                <XCircle className="h-12 w-12 mx-auto mb-4 text-[#D4AF37]/50" />
+                <p className="text-slate-400 text-lg">Nessuna richiesta rifiutata</p>
+              </CardContent>
             </Card>
           ) : (
             <div className="grid gap-4">
@@ -203,40 +240,44 @@ export default function JoinRequestsPage() {
 
       {/* Confirmation Dialog */}
       <AlertDialog open={!!selectedRequest} onOpenChange={(open) => !open && setSelectedRequest(null)}>
-        <AlertDialogContent className="bg-slate-800 border-slate-700">
+        <AlertDialogContent className="bg-black/90 border-[#D4AF37]/30 backdrop-blur-xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-white">
-              {actionType === 'approve' ? '✅ Approvare Giocatore?' : '❌ Rifiutare Giocatore?'}
+            <AlertDialogTitle className="text-white text-2xl flex items-center gap-2">
+              {actionType === 'approve' ? (
+                <><CheckCircle2 className="h-6 w-6 text-green-400" /> Approvare Giocatore?</>
+              ) : (
+                <><XCircle className="h-6 w-6 text-red-400" /> Rifiutare Giocatore?</>
+              )}
             </AlertDialogTitle>
-            <AlertDialogDescription className="text-slate-400">
-              <p className="font-semibold text-white mb-2">{selectedRequest?.full_name}</p>
-              <p>{selectedRequest?.email}</p>
+            <AlertDialogDescription className="text-slate-300">
+              <p className="font-semibold text-[#D4AF37] mb-1">{selectedRequest?.full_name}</p>
+              <p className="text-slate-400">{selectedRequest?.email}</p>
             </AlertDialogDescription>
           </AlertDialogHeader>
 
-          <div className="space-y-4">
+          <div className="space-y-4 my-4">
             <div>
-              <Label className="text-slate-200">Note (Opzionale)</Label>
+              <Label className="text-[#D4AF37] font-semibold">Note (Opzionale)</Label>
               <Textarea
                 value={responseNotes}
                 onChange={(e) => setResponseNotes(e.target.value)}
                 placeholder="Es: Benvenuto in squadra! Contattaci su Discord..."
-                className="mt-2 bg-slate-700/50 border-slate-600 text-white"
+                className="mt-2 bg-slate-900/50 border-[#D4AF37]/30 text-white placeholder-slate-500 focus:border-[#D4AF37]"
                 rows={3}
               />
             </div>
           </div>
 
           <div className="flex gap-3">
-            <AlertDialogCancel className="bg-slate-700 hover:bg-slate-600 text-white border-slate-600">
+            <AlertDialogCancel className="bg-slate-800 hover:bg-slate-700 text-white border-slate-700">
               Annulla
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleConfirmAction}
               disabled={processing}
               className={actionType === 'approve' 
-                ? 'bg-green-600 hover:bg-green-700' 
-                : 'bg-red-600 hover:bg-red-700'
+                ? 'bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white' 
+                : 'bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white'
               }
             >
               {processing ? (
@@ -260,62 +301,61 @@ export default function JoinRequestsPage() {
  */
 function RequestCard({ request, onApprove, onReject }) {
   return (
-    <Card className="bg-slate-800/50 border-slate-700 hover:border-slate-600 transition">
+    <Card className="bg-black/40 border-[#D4AF37]/30 hover:border-[#D4AF37]/60 transition-all backdrop-blur-xl">
       <CardContent className="pt-6">
-        <div className="flex flex-col lg:flex-row justify-between gap-4">
+        <div className="flex flex-col lg:flex-row justify-between gap-6">
           {/* Info */}
-          <div className="flex-1 space-y-3">
+          <div className="flex-1 space-y-4">
             <div>
-              <h3 className="text-lg font-bold text-white">{request.full_name}</h3>
-              <p className="text-sm text-slate-400">{request.email}</p>
+              <h3 className="text-2xl font-bold text-white mb-1">{request.full_name}</h3>
+              <p className="text-sm text-[#D4AF37]">{request.email}</p>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 text-sm">
-              <div>
-                <p className="text-slate-400">Piattaforma</p>
-                <p className="font-semibold text-white capitalize">
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-800">
+                <p className="text-slate-400 text-xs uppercase tracking-wider">Piattaforma</p>
+                <p className="font-semibold text-white mt-1">
                   {request.platform === 'xbox' ? '🎮 Xbox' : '🎮 PlayStation'}
                 </p>
               </div>
-              <div>
-                <p className="text-slate-400">Ruolo</p>
-                <p className="font-semibold text-white">{request.preferred_position}</p>
+              <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-800">
+                <p className="text-slate-400 text-xs uppercase tracking-wider">Ruolo</p>
+                <p className="font-semibold text-white mt-1">{request.preferred_position}</p>
               </div>
-              <div>
-                <p className="text-slate-400">Username Sito</p>
-                <p className="font-semibold text-white">{request.site_username}</p>
+              <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-800">
+                <p className="text-slate-400 text-xs uppercase tracking-wider">Username</p>
+                <p className="font-semibold text-white mt-1">{request.site_username}</p>
               </div>
-              <div>
-                <p className="text-slate-400">EA Gamertag</p>
-                <p className="font-semibold text-white">{request.ea_gamertag}</p>
+              <div className="bg-slate-900/50 rounded-lg p-3 border border-slate-800">
+                <p className="text-slate-400 text-xs uppercase tracking-wider">EA Tag</p>
+                <p className="font-semibold text-white mt-1">{request.ea_gamertag}</p>
               </div>
             </div>
 
             {request.notes && (
-              <div className="text-sm">
-                <p className="text-slate-400">Note</p>
-                <p className="text-white">{request.notes}</p>
+              <div className="bg-slate-900/30 rounded-lg p-3 border border-slate-800">
+                <p className="text-slate-400 text-xs uppercase tracking-wider mb-1">Note</p>
+                <p className="text-white text-sm">{request.notes}</p>
               </div>
             )}
 
             <p className="text-xs text-slate-500">
-              Richiesta inviata: {new Date(request.requested_at).toLocaleDateString('it-IT')}
+              📅 Richiesta: {new Date(request.requested_at).toLocaleDateString('it-IT')}
             </p>
           </div>
 
           {/* Actions */}
-          <div className="flex flex-col gap-2 lg:justify-center">
+          <div className="flex flex-col gap-3 lg:justify-center lg:w-40">
             <Button
               onClick={onApprove}
-              className="bg-green-600 hover:bg-green-700 text-white"
+              className="bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-semibold"
             >
               <Check className="h-4 w-4 mr-2" />
               Approva
             </Button>
             <Button
               onClick={onReject}
-              variant="outline"
-              className="border-red-600 text-red-400 hover:bg-red-600/10"
+              className="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white font-semibold"
             >
               <X className="h-4 w-4 mr-2" />
               Rifiuta
@@ -332,17 +372,32 @@ function RequestCard({ request, onApprove, onReject }) {
  */
 function ApprovedRequestCard({ request }) {
   return (
-    <Card className="bg-green-500/5 border-green-500/30">
+    <Card className="bg-black/40 border-green-500/30 hover:border-green-500/60 transition-all backdrop-blur-xl">
       <CardContent className="pt-6">
-        <div className="flex items-start justify-between">
+        <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
-            <div className="flex items-center gap-2 mb-2">
-              <h3 className="text-lg font-bold text-green-400">{request.full_name}</h3>
-              <Badge className="bg-green-500/20 text-green-400">✅ Approvato</Badge>
+            <div className="flex items-center gap-3 mb-2">
+              <h3 className="text-xl font-bold text-green-400">{request.full_name}</h3>
+              <Badge className="bg-green-500/20 text-green-300 border-green-500/50">
+                <CheckCircle2 className="h-3 w-3 mr-1" />
+                Approvato
+              </Badge>
             </div>
-            <p className="text-sm text-slate-400 mb-3">{request.email}</p>
+            <p className="text-sm text-slate-400 mb-4">{request.email}</p>
+            
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <div className="text-sm">
+                <p className="text-slate-400 text-xs uppercase">Piattaforma</p>
+                <p className="text-white font-semibold">{request.platform === 'xbox' ? '🎮 Xbox' : '🎮 PlayStation'}</p>
+              </div>
+              <div className="text-sm">
+                <p className="text-slate-400 text-xs uppercase">Ruolo</p>
+                <p className="text-white font-semibold">{request.preferred_position}</p>
+              </div>
+            </div>
+            
             <p className="text-xs text-slate-500">
-              Approvato: {new Date(request.responded_at).toLocaleDateString('it-IT')}
+              ✅ Approvato: {new Date(request.responded_at).toLocaleDateString('it-IT')}
             </p>
           </div>
         </div>
@@ -356,22 +411,28 @@ function ApprovedRequestCard({ request }) {
  */
 function RejectedRequestCard({ request }) {
   return (
-    <Card className="bg-red-500/5 border-red-500/30">
+    <Card className="bg-black/40 border-red-500/30 hover:border-red-500/60 transition-all backdrop-blur-xl">
       <CardContent className="pt-6">
-        <div className="flex items-start justify-between">
+        <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
-            <div className="flex items-center gap-2 mb-2">
-              <h3 className="text-lg font-bold text-red-400">{request.full_name}</h3>
-              <Badge className="bg-red-500/20 text-red-400">❌ Rifiutato</Badge>
+            <div className="flex items-center gap-3 mb-2">
+              <h3 className="text-xl font-bold text-red-400">{request.full_name}</h3>
+              <Badge className="bg-red-500/20 text-red-300 border-red-500/50">
+                <XCircle className="h-3 w-3 mr-1" />
+                Rifiutato
+              </Badge>
             </div>
-            <p className="text-sm text-slate-400 mb-3">{request.email}</p>
+            <p className="text-sm text-slate-400 mb-4">{request.email}</p>
+            
             {request.captain_response_notes && (
-              <p className="text-sm text-slate-300 mb-2">
-                <strong>Note:</strong> {request.captain_response_notes}
-              </p>
+              <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 mb-4">
+                <p className="text-xs text-slate-400 uppercase tracking-wider mb-1">📝 Note del Capitano</p>
+                <p className="text-red-200 text-sm">{request.captain_response_notes}</p>
+              </div>
             )}
+            
             <p className="text-xs text-slate-500">
-              Rifiutato: {new Date(request.responded_at).toLocaleDateString('it-IT')}
+              ❌ Rifiutato: {new Date(request.responded_at).toLocaleDateString('it-IT')}
             </p>
           </div>
         </div>
