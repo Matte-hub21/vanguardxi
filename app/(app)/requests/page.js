@@ -4,7 +4,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { useRole } from '@/lib/hooks/useRole'
@@ -257,19 +256,19 @@ export default function JoinRequestsPage() {
 
       {/* Confirmation Dialog */}
       {selectedRequest && (
-        <AlertDialog open={!!selectedRequest} onOpenChange={(open) => !open && setSelectedRequest(null)}>
-          <AlertDialogContent className="bg-black/90 border-[#D4AF37]/30 backdrop-blur-xl">
-            <AlertDialogHeader>
-              <AlertDialogTitle className="text-white text-2xl">
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+          <Card className="bg-black/90 border-[#D4AF37]/30 backdrop-blur-xl w-96">
+            <CardHeader>
+              <CardTitle className="text-white text-2xl">
                 {actionType === 'approve' ? '✅ Approvare Giocatore?' : '❌ Rifiutare Giocatore?'}
-              </AlertDialogTitle>
-              <AlertDialogDescription className="text-slate-300">
+              </CardTitle>
+              <CardDescription className="text-slate-300">
                 <p className="font-semibold text-[#D4AF37] mb-1">{selectedRequest.full_name}</p>
                 <p className="text-slate-400">{selectedRequest.email}</p>
-              </AlertDialogDescription>
-            </AlertDialogHeader>
+              </CardDescription>
+            </CardHeader>
 
-            <div className="space-y-4 my-4">
+            <CardContent className="space-y-4">
               <div>
                 <Label className="text-[#D4AF37] font-semibold">Note (Opzionale)</Label>
                 <Textarea
@@ -280,32 +279,35 @@ export default function JoinRequestsPage() {
                   rows={3}
                 />
               </div>
-            </div>
 
-            <div className="flex gap-3">
-              <AlertDialogCancel className="bg-slate-800 hover:bg-slate-700 text-white border-slate-700">
-                Annulla
-              </AlertDialogCancel>
-              <AlertDialogAction
-                onClick={handleConfirmAction}
-                disabled={processing}
-                className={actionType === 'approve' 
-                  ? 'bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white' 
-                  : 'bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white'
-                }
-              >
-                {processing ? (
-                  <>
-                    <Loader className="h-4 w-4 mr-2 animate-spin" />
-                    Elaborazione...
-                  </>
-                ) : (
-                  actionType === 'approve' ? '✅ Approva' : '❌ Rifiuta'
-                )}
-              </AlertDialogAction>
-            </div>
-          </AlertDialogContent>
-        </AlertDialog>
+              <div className="flex gap-3">
+                <Button
+                  onClick={() => setSelectedRequest(null)}
+                  className="bg-slate-800 hover:bg-slate-700 text-white border-slate-700 flex-1"
+                >
+                  Annulla
+                </Button>
+                <Button
+                  onClick={handleConfirmAction}
+                  disabled={processing}
+                  className={actionType === 'approve' 
+                    ? 'bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white flex-1' 
+                    : 'bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white flex-1'
+                  }
+                >
+                  {processing ? (
+                    <>
+                      <Loader className="h-4 w-4 mr-2 animate-spin" />
+                      Elaborazione...
+                    </>
+                  ) : (
+                    actionType === 'approve' ? '✅ Approva' : '❌ Rifiuta'
+                  )}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       )}
     </div>
   )
