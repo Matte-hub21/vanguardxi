@@ -256,55 +256,57 @@ export default function JoinRequestsPage() {
       </Tabs>
 
       {/* Confirmation Dialog */}
-      <AlertDialog open={!!selectedRequest} onOpenChange={(open) => !open && setSelectedRequest(null)}>
-        <AlertDialogContent className="bg-black/90 border-[#D4AF37]/30 backdrop-blur-xl">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-white text-2xl">
-              {actionType === 'approve' ? '✅ Approvare Giocatore?' : '❌ Rifiutare Giocatore?'}
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-slate-300">
-              <p className="font-semibold text-[#D4AF37] mb-1">{selectedRequest?.full_name}</p>
-              <p className="text-slate-400">{selectedRequest?.email}</p>
-            </AlertDialogDescription>
-          </AlertDialogHeader>
+      {selectedRequest && (
+        <AlertDialog open={!!selectedRequest} onOpenChange={(open) => !open && setSelectedRequest(null)}>
+          <AlertDialogContent className="bg-black/90 border-[#D4AF37]/30 backdrop-blur-xl">
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-white text-2xl">
+                {actionType === 'approve' ? '✅ Approvare Giocatore?' : '❌ Rifiutare Giocatore?'}
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-slate-300">
+                <p className="font-semibold text-[#D4AF37] mb-1">{selectedRequest.full_name}</p>
+                <p className="text-slate-400">{selectedRequest.email}</p>
+              </AlertDialogDescription>
+            </AlertDialogHeader>
 
-          <div className="space-y-4 my-4">
-            <div>
-              <Label className="text-[#D4AF37] font-semibold">Note (Opzionale)</Label>
-              <Textarea
-                value={responseNotes}
-                onChange={(e) => setResponseNotes(e.target.value)}
-                placeholder="Es: Benvenuto in squadra! Contattaci su Discord..."
-                className="mt-2 bg-slate-900/50 border-[#D4AF37]/30 text-white placeholder-slate-500 focus:border-[#D4AF37]"
-                rows={3}
-              />
+            <div className="space-y-4 my-4">
+              <div>
+                <Label className="text-[#D4AF37] font-semibold">Note (Opzionale)</Label>
+                <Textarea
+                  value={responseNotes}
+                  onChange={(e) => setResponseNotes(e.target.value)}
+                  placeholder="Es: Benvenuto in squadra! Contattaci su Discord..."
+                  className="mt-2 bg-slate-900/50 border-[#D4AF37]/30 text-white placeholder-slate-500 focus:border-[#D4AF37]"
+                  rows={3}
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="flex gap-3">
-            <AlertDialogCancel className="bg-slate-800 hover:bg-slate-700 text-white border-slate-700">
-              Annulla
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleConfirmAction}
-              disabled={processing}
-              className={actionType === 'approve' 
-                ? 'bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white' 
-                : 'bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white'
-              }
-            >
-              {processing ? (
-                <>
-                  <Loader className="h-4 w-4 mr-2 animate-spin" />
-                  Elaborazione...
-                </>
-              ) : (
-                actionType === 'approve' ? '✅ Approva' : '❌ Rifiuta'
-              )}
-            </AlertDialogAction>
-          </div>
-        </AlertDialogContent>
-      </AlertDialog>
+            <div className="flex gap-3">
+              <AlertDialogCancel className="bg-slate-800 hover:bg-slate-700 text-white border-slate-700">
+                Annulla
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleConfirmAction}
+                disabled={processing}
+                className={actionType === 'approve' 
+                  ? 'bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white' 
+                  : 'bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white'
+                }
+              >
+                {processing ? (
+                  <>
+                    <Loader className="h-4 w-4 mr-2 animate-spin" />
+                    Elaborazione...
+                  </>
+                ) : (
+                  actionType === 'approve' ? '✅ Approva' : '❌ Rifiuta'
+                )}
+              </AlertDialogAction>
+            </div>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
     </div>
   )
 }
