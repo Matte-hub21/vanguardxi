@@ -135,11 +135,8 @@ export default function JoinRequestsPage() {
         {/* Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3 bg-black/40 border border-[#D4AF37]/30 rounded-lg p-1">
-            <TabsTrigger 
-              value="pending"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#D4AF37] data-[state=active]:to-[#FFE066] data-[state=active]:text-black text-[#D4AF37] transition-all flex items-center gap-2"
-            >
-              <Clock className="h-4 w-4" />
+            <TabsTrigger value="pending" className="text-[#D4AF37] transition-all">
+              <Clock className="h-4 w-4 mr-2" />
               In Sospeso
               {requests.filter(r => r.status === 'pending').length > 0 && (
                 <Badge className="ml-2 bg-yellow-500/20 text-yellow-400 border-yellow-500/50">
@@ -147,18 +144,12 @@ export default function JoinRequestsPage() {
                 </Badge>
               )}
             </TabsTrigger>
-            <TabsTrigger 
-              value="approved"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#D4AF37] data-[state=active]:to-[#FFE066] data-[state=active]:text-black text-[#D4AF37] transition-all flex items-center gap-2"
-            >
-              <CheckCircle2 className="h-4 w-4" />
+            <TabsTrigger value="approved" className="text-[#D4AF37] transition-all">
+              <CheckCircle2 className="h-4 w-4 mr-2" />
               Approvate
             </TabsTrigger>
-            <TabsTrigger 
-              value="rejected"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#D4AF37] data-[state=active]:to-[#FFE066] data-[state=active]:text-black text-[#D4AF37] transition-all flex items-center gap-2"
-            >
-              <XCircle className="h-4 w-4" />
+            <TabsTrigger value="rejected" className="text-[#D4AF37] transition-all">
+              <XCircle className="h-4 w-4 mr-2" />
               Rifiutate
             </TabsTrigger>
           </TabsList>
